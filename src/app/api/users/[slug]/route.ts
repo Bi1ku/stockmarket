@@ -1,10 +1,17 @@
 import { prisma } from "@/constants";
 import { NextResponse } from "next/server";
 
-export async function GET(_: Request, { userId }: { userId: string }) {
+export async function GET(
+  _: Request,
+  { params }: { params: { slug: string } },
+) {
   try {
-    const res = await prisma.user.findUniqueOrThrow({
-      where: { id: userId },
+    const { slug } = params;
+
+    const res = await prisma.user.findFirstOrThrow({
+      where: {
+        OR: [{ email: slug }, { id: slug }],
+      },
     });
 
     return NextResponse.json(res, { status: 201 });
