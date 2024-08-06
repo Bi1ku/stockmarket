@@ -1,0 +1,15 @@
+import { prisma } from "@/constants";
+import { NextResponse } from "next/server";
+
+export async function GET(_: Request, { email }: { email: string }) {
+  try {
+    const res = await prisma.user.findUniqueOrThrow({
+      where: { id: email },
+    });
+
+    return NextResponse.json(res, { status: 201 });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
+  }
+}
