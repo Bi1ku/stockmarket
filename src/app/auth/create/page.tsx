@@ -1,15 +1,21 @@
 "use client";
 
 import { enhancedFetch } from "@/utils";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Create = () => {
+  const { push } = useRouter();
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
     password: "",
     email: "",
   });
+
+  useEffect(() => {
+    if (localStorage.getItem("user")) push("/dashboard");
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,

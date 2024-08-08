@@ -1,14 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { enhancedFetch } from "@/utils";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const { push } = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
+  });
+
+  useEffect(() => {
+    if (localStorage.getItem("use")) push("/dashboard");
   });
 
   const handleChange = (
@@ -25,7 +29,7 @@ const Login = () => {
       // notify error
     }
 
-    localStorage.setItem("user", JSON.stringify(response.data));
+    localStorage.setItem("user", JSON.stringify(response));
     push("/dashboard");
   };
 
