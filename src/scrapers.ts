@@ -13,5 +13,5 @@ export const getStockData = async (symbol: string) => {
 
   await browser.close();
 
-  return price;
+  return { price };
 };

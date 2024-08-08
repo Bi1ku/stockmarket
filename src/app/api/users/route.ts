@@ -13,3 +13,20 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "An error occurred" }, { status: 500 });
   }
 }
+
+// Put stocks into user
+export async function PUT(req: Request) {
+  try {
+    const { id, ...data } = await req.json();
+
+    const res = await prisma.user.update({
+      where: { id },
+      data,
+    });
+
+    return NextResponse.json(res, { status: 201 });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
+  }
+}
