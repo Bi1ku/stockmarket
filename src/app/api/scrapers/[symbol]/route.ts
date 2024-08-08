@@ -8,9 +8,9 @@ export async function GET(
   try {
     const { symbol } = params;
 
-    const res = await getStockData(symbol);
+    const response = await getStockData(symbol);
 
-    return NextResponse.json(res, { status: 201 });
+    return NextResponse.json(response, { status: 201 });
   } catch (e) {
     console.log(e);
     return NextResponse.json({ error: "An error occurred" }, { status: 500 });
