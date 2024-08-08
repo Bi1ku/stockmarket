@@ -12,6 +12,7 @@ export async function GET(
 
     return NextResponse.json(res, { status: 201 });
   } catch (e) {
+    console.log(e);
     return NextResponse.json({ error: "An error occurred" }, { status: 500 });
   }
 }

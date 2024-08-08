@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { enhancedFetch } from "@/utils";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const { push } = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -19,11 +21,12 @@ const Login = () => {
   const onSubmit = async () => {
     const response = await enhancedFetch(`/api/users/${form.email}`);
 
-    if (response.status == 201) {
-      console.log("User found");
+    if (response.status != 201) {
+      // notify error
     }
 
-    console.log(response);
+    localStorage.setItem("user", JSON.stringify(response.data));
+    push("/dashboard");
   };
 
   return (

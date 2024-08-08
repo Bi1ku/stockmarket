@@ -7,14 +7,18 @@ import { useEffect, useState } from "react";
 const StockInfo = () => {
   const symbol = useParams<{ symbol: string }>().symbol;
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<{ price: string }>();
+  const [data, setData] = useState<{
+    price: string;
+    change: string;
+    percentChange: string;
+  }>();
   const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
     (async () => {
       const res = await enhancedFetch(`/api/scrapers/${symbol}`);
-      setData(res);
       console.log(res);
+      setData(res);
 
       setLoading(false);
     })();
@@ -32,15 +36,23 @@ const StockInfo = () => {
 
   return (
     <div>
-      {loading ? (
-        "Loading..."
-      ) : (
-        <div className="flex">
-          <span>price: {data?.price}</span>
-          <button onClick={buy}>Buy</button>
+      {
+        <div className="flex flex-col">
+          <ul>
+            <li>Price: {data?.price}</li>
+            <li>Change: {data?.change}</li>
+            <li>Percent Change: {data?.percentChange}</li>
+          </ul>
+
+          <div>
+            <button onClick={buy}>Buy</button>
+            <input
+              type="number"
+              onChange={(e) => setQuantity(+e.target.value)}
+            />
+          </div>
         </div>
-      )}
-      <input type="number" onChange={(e) => setQuantity(+e.target.value)} />
+      }
     </div>
   );
 };
