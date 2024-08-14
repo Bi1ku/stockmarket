@@ -34,6 +34,8 @@ const StockInfo = () => {
     });
   };
 
+  const sell = async () => { };
+
   return (
     <div>
       {
@@ -50,6 +52,11 @@ const StockInfo = () => {
               type="number"
               onChange={(e) => setQuantity(+e.target.value)}
             />
+            <button onClick={sell}>Sell</button>
+            <input
+              type="number"
+              onChange={(e) => setQuantity(+e.target.value)}
+            ></input>
           </div>
         </div>
       }
